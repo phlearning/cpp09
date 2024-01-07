@@ -6,7 +6,7 @@
 /*   By: pvong <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 10:43:36 by pvong             #+#    #+#             */
-/*   Updated: 2023/12/11 16:40:27 by pvong            ###   ########.fr       */
+/*   Updated: 2024/01/07 22:59:12 by pvong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ std::map<std::string, float> BitcoinExchange::_readFile(std::string const &filen
     std::map<std::string, float> data;
     if (!tryOpenFile(filename))
         return data;
-    std::ifstream file(filename);
+    std::ifstream file(filename.c_str());
     std::string date;
     std::string strValue;
     float value;
@@ -80,7 +80,7 @@ std::map<std::string, float> BitcoinExchange::_readFile(std::string const &filen
     while (std::getline(file, line)) {
         std::stringstream ss(line);
         std::getline(ss, date, ',');
-        if (!validDate(date))
+        if (!validDateFormat(date))
             continue;
         ss >> strValue;
         if (!validValue(strValue))
@@ -108,7 +108,7 @@ float BitcoinExchange::getValue(std::string const &date) const {
 
 void BitcoinExchange::evaluateDataInput(std::string const &filename) {
     // look for the data within the file, get the value after the separator " | ", multiply it by the getValue() of the date and print the result
-    std::fstream file(filename);
+    std::fstream file(filename.c_str());
     std::string line;
     std::string date;
     std::string strValue;
@@ -117,7 +117,7 @@ void BitcoinExchange::evaluateDataInput(std::string const &filename) {
     while (std::getline(file, line)) {
         std::stringstream ss(line);
         std::getline(ss, date, ' ');
-        if (!validDate(date))
+        if (!validDateFormat(date))
             continue;
         char c;
         ss >> c;
@@ -128,6 +128,9 @@ void BitcoinExchange::evaluateDataInput(std::string const &filename) {
         ss >> strValue;
         if (ss.fail()) {
             std::cout << COLOR("Error: bad input => ", RED) << date << std::endl;
+            continue;
+        } else if (!validDate(date)) {
+            std::cout << COLOR("Error: invalid date => ", RED) << date << std::endl;
             continue;
         }
         value = stringToFloat(strValue);
@@ -140,7 +143,7 @@ void BitcoinExchange::evaluateDataInput(std::string const &filename) {
             continue;
         }
         result = value * getValue(date);
-        std::cout << date << " => " << value << " = " << result << " valueOnDate: " << valueOnDate << std::endl;
+        std::cout << date << " => " << value << " = " << result /* << " valueOnDate: " << valueOnDate */ << std::endl;
     }
 
 }
@@ -156,7 +159,7 @@ void BitcoinExchange::printData(std::map<std::string, float> const &data) const 
 /* -------------------------------------------------------------------------- */
 
 bool tryOpenFile(std::string const &str) {
-    std::ifstream file(str);
+    std::ifstream file(str.c_str());
     if (!file.is_open()) {
         std::cout << COLOR("Error: cannot open file", RED) << std::endl;
         return false;
@@ -165,12 +168,12 @@ bool tryOpenFile(std::string const &str) {
 }
 
 void printFile(std::string const &file) {
-    std::ifstream ifs(file);
+    std::ifstream ifs(file.c_str());
     std::string content((std::istreambuf_iterator<char>(ifs)), (std::istreambuf_iterator<char>()));
     std::cout << content << std::endl;
 }
 
-bool validDate(std::string const &str) {
+bool validDateFormat(std::string const &str) {
     if (str.length() != 10)
         return false;
     if (str[4] != '-' || str[7] != '-')
@@ -182,6 +185,24 @@ bool validDate(std::string const &str) {
             return false;
     }
     return true;
+}
+
+bool validDate(std::string const &input) {
+    // Check the length of the string
+    if (input.length() != 10) {
+        return false;
+    }
+
+    // Use a stringstream to extract the year, month, and day
+    std::istringstream ss(input);
+    int year, month, day;
+
+    char dash1, dash2;
+    ss >> year >> dash1 >> month >> dash2 >> day;
+
+    // Check if the extraction was successful and the separators are correct
+    return ss && ss.eof() && dash1 == '-' && dash2 == '-' &&
+           year >= 0 && month >= 1 && month <= 12 && day >= 1 && day <= 31;
 }
 
 bool validValue(std::string const &str) {

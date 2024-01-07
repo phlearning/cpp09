@@ -6,7 +6,7 @@
 /*   By: pvong <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 10:43:26 by pvong             #+#    #+#             */
-/*   Updated: 2023/12/11 16:43:56 by pvong            ###   ########.fr       */
+/*   Updated: 2024/01/07 22:55:47 by pvong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <map>
 
 #ifndef SHOWMSG
-#define SHOWMSG 1
+#define SHOWMSG 0
 #endif /* SHOWMSG */
 
 #ifndef MYCOLORS
@@ -83,6 +83,7 @@ private:
 
 bool tryOpenFile(std::string const &str);
 void printFile(std::string const &str);
+bool validDateFormat(std::string const &str);
 bool validDate(std::string const &str);
 bool validValue(std::string const &str);
 void printErrorValueMsg(float value);
