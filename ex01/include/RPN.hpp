@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   RPN.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pvong <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/11 10:43:02 by pvong             #+#    #+#             */
-/*   Updated: 2024/01/07 23:19:07 by pvong            ###   ########.fr       */
+/*   Created: 2024/01/07 23:13:33 by pvong             #+#    #+#             */
+/*   Updated: 2024/01/07 23:38:01 by pvong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "BitcoinExchange.hpp"
+#ifndef RPN_HPP
+# define RPN_HPP
 
-int main(int ac, char **av) {
-    if (ac != 2) {
-        std::cout << COLOR("Error: could not open file.", RED) << std::endl;
-        return (1);
-    }
-    BitcoinExchange b(av[1]);
-    b.evaluateDataInput(av[1]);
+# include <iostream>
+# include <string>
+# include <sstream>
+# include <stack>
+# include <cstdlib>
 
-    return (0);
-}
+void rpn(std::string str);
+
+#endif

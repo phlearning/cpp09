@@ -5,20 +5,18 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pvong <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/11 10:43:02 by pvong             #+#    #+#             */
-/*   Updated: 2024/01/07 23:19:07 by pvong            ###   ########.fr       */
+/*   Created: 2024/01/07 23:13:04 by pvong             #+#    #+#             */
+/*   Updated: 2024/01/08 00:00:16 by pvong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "BitcoinExchange.hpp"
+#include "RPN.hpp"
 
 int main(int ac, char **av) {
     if (ac != 2) {
-        std::cout << COLOR("Error: could not open file.", RED) << std::endl;
+        std::cout << "Usage: ./ex01 \"<expression>\"" << std::endl;
         return (1);
     }
-    BitcoinExchange b(av[1]);
-    b.evaluateDataInput(av[1]);
-
+    rpn(av[1]);
     return (0);
 }
