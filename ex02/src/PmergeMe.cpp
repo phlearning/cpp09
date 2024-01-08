@@ -6,7 +6,7 @@
 /*   By: pvong <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 01:17:44 by pvong             #+#    #+#             */
-/*   Updated: 2024/01/08 16:07:08 by pvong            ###   ########.fr       */
+/*   Updated: 2024/01/08 16:45:33 by pvong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,17 @@
 /*                                  PMERGEME                                  */
 /* -------------------------------------------------------------------------- */
 
+/**
+ * @brief Sorts a range of elements in a vector and a list using merge-insertion sort algorithm.
+ * 
+ * This function takes an array of strings as input and converts them to integers. It then populates
+ * a vector and a list with these integers. The function measures the time taken to sort the vector
+ * and the list using the merge-insertion sort algorithm. It then displays the sorted vector and list,
+ * as well as the time taken to process the range of elements in milliseconds.
+ * 
+ * @param ac The number of elements in the array.
+ * @param av The array of strings representing the elements.
+ */
 void PmergeMe(int ac, char **av) {
 
     std::vector<int> v;
@@ -66,6 +77,13 @@ void PmergeMe(int ac, char **av) {
 /*                          MERGE INSERTION SORT LIST                         */
 /* -------------------------------------------------------------------------- */
 
+/**
+ * Sorts a subarray of a list using the insertion sort algorithm.
+ * 
+ * @param lst The list to be sorted.
+ * @param p The starting index of the subarray.
+ * @param q The ending index of the subarray.
+ */
 void insertionSortList(std::list<int> &lst, int p, int q) {
     if (q <= p || lst.size() <= 1)
         return; // Subarray is already sorted
@@ -91,6 +109,14 @@ void insertionSortList(std::list<int> &lst, int p, int q) {
     }
 }
 
+/**
+ * Merges two sublists of a given list.
+ * 
+ * @param A The list to be merged.
+ * @param p The starting index of the first sublist.
+ * @param q The ending index of the first sublist.
+ * @param r The ending index of the second sublist.
+ */
 void mergeList(std::list<int> &A, int p, int q, int r) {
     std::list<int> left, right;
 
@@ -134,6 +160,13 @@ void mergeList(std::list<int> &A, int p, int q, int r) {
     }
 }
 
+/**
+ * Sorts a sublist of a given list using merge sort and insertion sort.
+ * 
+ * @param A The list to be sorted.
+ * @param p The starting index of the sublist.
+ * @param r The ending index of the sublist.
+ */
 void mergeInsertionSortList(std::list<int> &A, int p, int r) {
     if (r - p > K) {
         int q = (p + r) / 2;
@@ -160,18 +193,39 @@ void insertionSortVector(std::vector<int> &A, int p, int q) {
     }
 }
 
+
+/**
+ * Merges two subarrays of a vector.
+ * n1 is the size of the first subarray.
+ * n2 is the size of the second subarray.
+ * 
+ * Example of array A = {1, 3, 5, 2, 4, 6}:
+ * p = 0, q = 2, r = 5
+ * A[p..q] = {1, 3, 5} // A[0..2] = {1, 3, 5}
+ * 
+ * @param A The vector to be merged.
+ * @param p The starting index of the first subarray.
+ * @param q The ending index of the first subarray.
+ * @param r The ending index of the second subarray.
+ */
 void mergeVector(std::vector<int> &A, int p, int q, int r) {
     int n1 = q - p + 1;
     int n2 = r - q;
+    
     std::vector<int> L;
-    std::vector<int> R;
     for (int i = 0; i < n1; i++)
         L.push_back(A[p + i]);
+    int Lindex = 0;
+
+    std::vector<int> R;
     for (int j = 0; j < n2; j++)
         R.push_back(A[q + j + 1]);
     int Rindex = 0;
-    int Lindex = 0;
+
     for (int i = p; i <= r; i++) {
+        // If Rindex >= n2, then R is empty, or if Lindex < n1 and L[Lindex] <= R[Rindex], then L[Lindex] is the next smallest element
+        // Otherwise, R[Rindex] is the next smallest element
+        // A[i] is set to the next smallest element
         if (Rindex >= n2 || (Lindex < n1 && L[Lindex] <= R[Rindex])) {
             A[i] = L[Lindex];
             Lindex++;
@@ -182,6 +236,14 @@ void mergeVector(std::vector<int> &A, int p, int q, int r) {
     }
 }
 
+
+/**
+ * Recursively sorts a vector using merge sort algorithm for larger subarrays and insertion sort algorithm for smaller subarrays.
+ * 
+ * @param A The vector to be sorted.
+ * @param p The starting index of the subarray to be sorted.
+ * @param r The ending index of the subarray to be sorted.
+ */
 void mergeInsertionSortVector(std::vector<int> &A, int p, int r) {
     if (r - p > K) {
         int q = (p + r) / 2;
