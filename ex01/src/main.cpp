@@ -6,7 +6,7 @@
 /*   By: pvong <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 23:13:04 by pvong             #+#    #+#             */
-/*   Updated: 2024/01/08 00:00:16 by pvong            ###   ########.fr       */
+/*   Updated: 2024/01/08 01:25:44 by pvong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int main(int ac, char **av) {
     if (ac != 2) {
-        std::cout << "Usage: ./ex01 \"<expression>\"" << std::endl;
+        std::cout << "Usage: ./RPN \"<expression>\"" << std::endl;
         return (1);
     }
     rpn(av[1]);
