@@ -6,7 +6,7 @@
 /*   By: pvong <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 00:16:45 by pvong             #+#    #+#             */
-/*   Updated: 2024/01/08 15:04:09 by pvong            ###   ########.fr       */
+/*   Updated: 2024/01/08 16:08:17 by pvong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void mergeVector(std::vector<int> &A, int p, int q, int r);
 void mergeInsertionSortVector(std::vector<int> &A, int p, int r);
 
 void insertionSortList(std::list<int> &A, int p, int q);
-// void insertionSortList(std::list<int> &lst);
 void mergeList(std::list<int> &A, int p, int q, int r);
 void mergeInsertionSortList(std::list<int> &A, int p, int r);
 

@@ -6,7 +6,7 @@
 #    By: pvong <marvin@42lausanne.ch>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/11 10:42:32 by pvong             #+#    #+#              #
-#    Updated: 2024/01/08 02:21:00 by pvong            ###   ########.fr        #
+#    Updated: 2024/01/08 16:08:27 by pvong            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,8 +30,6 @@ OBJ_DIR = obj
 
 SRC = main.cpp \
 		PmergeMe.cpp \
-		MergeInsertionSortVector.cpp \
-		MergeInsertionSortList.cpp
 
 SRC := $(addprefix $(SRC_DIR)/, $(SRC))
 OBJ := $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SRC))

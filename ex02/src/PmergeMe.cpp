@@ -6,7 +6,7 @@
 /*   By: pvong <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 01:17:44 by pvong             #+#    #+#             */
-/*   Updated: 2024/01/08 16:05:36 by pvong            ###   ########.fr       */
+/*   Updated: 2024/01/08 16:07:08 by pvong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ void PmergeMe(int ac, char **av) {
         v.push_back(nb);
         l.push_back(nb);
     }
-    
+
     std::cout << std::endl;
     std::cout << COLOR("Before:", CYAN) << " ";
     for (int i = 1; i < ac; i++)
         std::cout << av[i] << " ";
     std::cout << std::endl;
-    
+
     // Measure the time taken to sort the vector and display the vector sorted
     time_t start = clock();
     mergeInsertionSortVector(v, 0, v.size() - 1);
@@ -57,17 +57,18 @@ void PmergeMe(int ac, char **av) {
     double dTimeTaken = static_cast<double>(timeTaken) * 1000 / CLOCKS_PER_SEC;
     double dTimeTaken2 = static_cast<double>(timeTaken2) * 1000 / CLOCKS_PER_SEC;
     std::cout << COLOR("Time to process a range of ", GREEN) << ac - 1 << COLOR(" elements with std::vector: ", GREEN)
-        << std::fixed << std::setprecision(4) << dTimeTaken << " ms" << std::endl;
+              << std::fixed << std::setprecision(4) << dTimeTaken << " ms" << std::endl;
     std::cout << COLOR("Time to process a range of ", GREEN) << ac - 1 << COLOR(" elements with std::list: ", GREEN)
-        << std::fixed << std::setprecision(4) << dTimeTaken2 << " ms" << std::endl;
+              << std::fixed << std::setprecision(4) << dTimeTaken2 << " ms" << std::endl;
 }
 
 /* -------------------------------------------------------------------------- */
 /*                          MERGE INSERTION SORT LIST                         */
 /* -------------------------------------------------------------------------- */
 
-void insertionSortList(std::list<int>& lst, int p, int q) {
-    if (q <= p || lst.size() <= 1) return; // Subarray is already sorted
+void insertionSortList(std::list<int> &lst, int p, int q) {
+    if (q <= p || lst.size() <= 1)
+        return; // Subarray is already sorted
 
     std::list<int>::iterator start = lst.begin();
     std::advance(start, p);
@@ -159,7 +160,6 @@ void insertionSortVector(std::vector<int> &A, int p, int q) {
     }
 }
 
-
 void mergeVector(std::vector<int> &A, int p, int q, int r) {
     int n1 = q - p + 1;
     int n2 = r - q;
@@ -175,8 +175,7 @@ void mergeVector(std::vector<int> &A, int p, int q, int r) {
         if (Rindex >= n2 || (Lindex < n1 && L[Lindex] <= R[Rindex])) {
             A[i] = L[Lindex];
             Lindex++;
-        }
-        else {
+        } else {
             A[i] = R[Rindex];
             Rindex++;
         }
@@ -189,7 +188,6 @@ void mergeInsertionSortVector(std::vector<int> &A, int p, int r) {
         mergeInsertionSortVector(A, p, q);
         mergeInsertionSortVector(A, q + 1, r);
         mergeVector(A, p, q, r);
-    }
-    else
+    } else
         insertionSortVector(A, p, r);
 }
