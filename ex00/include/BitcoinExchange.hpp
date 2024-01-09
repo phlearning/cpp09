@@ -6,7 +6,7 @@
 /*   By: pvong <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 10:43:26 by pvong             #+#    #+#             */
-/*   Updated: 2024/01/07 22:55:47 by pvong            ###   ########.fr       */
+/*   Updated: 2024/01/09 17:46:44 by pvong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void printFile(std::string const &str);
 bool validDateFormat(std::string const &str);
 bool validDate(std::string const &str);
 bool validValue(std::string const &str);
+bool validValueDB(std::string const &str)
 void printErrorValueMsg(float value);
 float stringToFloat(std::string const &str);
 

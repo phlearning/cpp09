@@ -6,7 +6,7 @@
 /*   By: pvong <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 10:43:36 by pvong             #+#    #+#             */
-/*   Updated: 2024/01/09 14:40:28 by pvong            ###   ########.fr       */
+/*   Updated: 2024/01/09 18:02:13 by pvong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ std::map<std::string, float> BitcoinExchange::_readFile(
         if (!validDateFormat(date))
             continue;
         ss >> strValue;
-        if (!validValue(strValue))
+        if (!validValueDB(strValue))
             continue;
 
         value = stringToFloat(strValue);
@@ -144,8 +144,11 @@ void BitcoinExchange::evaluateDataInput(std::string const &filename) {
     while (std::getline(file, line)) {
         std::stringstream ss(line);
         std::getline(ss, date, ' ');
-        if (!validDateFormat(date))
+        if (!validDateFormat(date)) {
+            std::cout << COLOR("Error: invalid date format => ", RED) << date
+                      << std::endl;
             continue;
+        }
         char c;
         ss >> c;
         if (c != '|')
@@ -266,6 +269,19 @@ bool validValue(std::string const &str) {
     }
     float value = std::atof(str.c_str());
     if (value < 0 || value > 1000)
+        return false;
+    return true;
+}
+
+bool validValueDB(std::string const &str) {
+    for (int i = 0; i < static_cast<int>(str.length()); i++) {
+        if (str[i] == '.')
+            continue;
+        if (str[i] < '0' || str[i] > '9')
+            return false;
+    }
+    float value = std::atof(str.c_str());
+    if (value < 0)
         return false;
     return true;
 }
