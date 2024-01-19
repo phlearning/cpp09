@@ -6,7 +6,7 @@
 /*   By: pvong <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 10:43:36 by pvong             #+#    #+#             */
-/*   Updated: 2024/01/09 18:02:13 by pvong            ###   ########.fr       */
+/*   Updated: 2024/01/19 11:12:11 by pvong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ void BitcoinExchange::evaluateDataInput(std::string const &filename) {
         std::stringstream ss(line);
         std::getline(ss, date, ' ');
         if (!validDateFormat(date)) {
+            if (line.compare("date | value") == 0) continue;
             std::cout << COLOR("Error: invalid date format => ", RED) << date
                       << std::endl;
             continue;
@@ -228,12 +229,6 @@ bool validDateFormat(std::string const &str) {
     return true;
 }
 
-/**
- * @brief Checks if a given date string is valid.
- *
- * @param input The date string to be validated.
- * @return true if the date is valid, false otherwise.
- */
 bool validDate(std::string const &input) {
     // Check the length of the string
     if (input.length() != 10) {
@@ -248,8 +243,28 @@ bool validDate(std::string const &input) {
     ss >> year >> dash1 >> month >> dash2 >> day;
 
     // Check if the extraction was successful and the separators are correct
-    return ss && ss.eof() && dash1 == '-' && dash2 == '-' && year >= 0 &&
-           month >= 1 && month <= 12 && day >= 1 && day <= 31;
+    if (!ss || !ss.eof() || dash1 != '-' || dash2 != '-' || year < 0 ||
+        month < 1 || month > 12 || day < 1 || day > 31) {
+        return false;
+    }
+
+    // Check if the day is valid for the given month and year
+    if (day > 28) {
+        bool leapYear = (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
+        if (day == 29 && month == 2 && !leapYear) {
+            return false;
+        }
+        if (day == 30 && month == 2) {
+            return false;
+        }
+        if (day == 31 &&
+            (month == 2 || month == 4 || month == 6 || month == 9 ||
+             month == 11)) {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 /**

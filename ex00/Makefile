@@ -6,7 +6,7 @@
 #    By: pvong <marvin@42lausanne.ch>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/11 10:42:32 by pvong             #+#    #+#              #
-#    Updated: 2023/12/11 11:52:59 by pvong            ###   ########.fr        #
+#    Updated: 2024/01/19 10:55:22 by pvong            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,7 @@ noshow: CXXFLAGS += -DSHOWMSG=0
 noshow: clean $(NAME) run
 
 run: $(NAME)
-	./$(NAME)
+	./$(NAME) input.csv
 	
 
 clean:
